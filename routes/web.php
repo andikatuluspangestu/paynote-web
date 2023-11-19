@@ -31,6 +31,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('categories/delete/{id}', 'CategoriesController@delete')->name('categories.delete');
 });
 
+// Incomes
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('incomes', 'IncomesController@index')->name('incomes');
+    Route::get('incomes/add', 'IncomesController@addPage')->name('incomes.addPage');
+    Route::post('incomes/insert', 'IncomesController@insert')->name('incomes.insert');
+    Route::get('incomes/edit/{id}', 'IncomesController@editPage')->name('incomes.editPage');
+    Route::put('incomes/update/{id}', 'IncomesController@update')->name('incomes.update');
+    Route::get('incomes/delete/{id}', 'IncomesController@delete')->name('incomes.delete');
+});
+
+// Expanses
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('expenses', 'ExpensesController@index')->name('expenses');
+    Route::get('expenses/add', 'ExpensesController@addPage')->name('expenses.addPage');
+    Route::post('expenses/insert', 'ExpensesController@insert')->name('expenses.insert');
+    Route::get('expenses/edit/{id}', 'ExpensesController@editPage')->name('expenses.editPage');
+    Route::put('expenses/update/{id}', 'ExpensesController@update')->name('expenses.update');
+    Route::get('expenses/delete/{id}', 'ExpensesController@delete')->name('expenses.delete');
+});
+
 // Dashboard Routes
 Route::get('/home', 'HomeController@index')->name('home');
 

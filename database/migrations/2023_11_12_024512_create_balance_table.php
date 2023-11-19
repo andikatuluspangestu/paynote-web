@@ -15,7 +15,7 @@ class CreateBalanceTable extends Migration
     {
         Schema::create('balance', function (Blueprint $table) {
             $table->id('id_balance');
-            $table->decimal(('amount'), 10, 2);
+            $table->integer('amount');
             $table->string('description');
             $table->timestamp('updated_at')->useCurrent();
         });

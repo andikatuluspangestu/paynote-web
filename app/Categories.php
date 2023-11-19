@@ -8,6 +8,12 @@ class Categories extends Model
 {
     // Inisalisasi Table
     protected $table = 'categories';
+    public $timestamps = false;
+
+    // Mass Assignment
+    protected $fillable = [
+        'name_category'
+    ];
 
     // Get All Data
     public static function getAll()
@@ -37,5 +43,12 @@ class Categories extends Model
     public static function deleteData($id)
     {
         return Categories::where('id_category', $id)->delete();
+    }
+
+    // Total Categories
+    public static function totalCategories()
+    {
+        $totalCategories = Categories::count();
+        return $totalCategories;
     }
 }

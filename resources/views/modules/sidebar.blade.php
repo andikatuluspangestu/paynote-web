@@ -16,7 +16,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('home')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
         </li>
@@ -44,14 +44,14 @@
 
         <!-- Nav Item - Pemasukan -->
         <li class="nav-item">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="{{ route('incomes')}}">
             <i class="fas fa-fw fa-download"></i>
             <span>Pemasukan</span></a>
         </li>
 
         <!-- Nav Item - Pegeluaran -->
         <li class="nav-item">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="{{ route('expenses')}}">
             <i class="fas fa-fw fa-external-link-alt"></i>
             <span>Pengeluaran</span></a>
         </li>

@@ -34,9 +34,10 @@ class CategoriesController extends Controller
     }
 
     // Goto Edit Data Page
-    public function editPage($id)
+    public function editPage($id_category)
     {
-        $category = Categories::find($id);
+        // Ambil data kategori berdasarkan id_category via model
+        $category = Categories::getById($id_category);
 
         if (!$category) {
             return redirect()->route('categories')->with('error', 'Data Kategori Tidak Ditemukan');
@@ -50,11 +51,11 @@ class CategoriesController extends Controller
     public function update(Request $request, $id_category)
     {
         $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+            'name_category' => 'required|unique:categories|max:255',
         ]);
 
         Categories::updateData($id_category, [
-            'category_name' => $request->category_name,
+            'name_category' => $request->name_category,
         ]);
 
         return redirect()->route('categories')->with('success', 'Data Berhasil Diubah');

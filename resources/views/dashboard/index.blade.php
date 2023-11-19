@@ -33,7 +33,7 @@
                 Balance
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
-                Rp 200.000
+                {{ number_format($total_balance, 0, ',', '.') }}
               </div>
             </div>
             <div class="col-auto">
@@ -51,10 +51,10 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                Income 
+                Incomes
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
-                Rp 100.000
+                {{ number_format($total_incomes, 0, ',', '.') }}
               </div>
             </div>
             <div class="col-auto">
@@ -77,12 +77,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col-auto">
                   <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                    Rp 50.000
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="progress progress-sm mr-2">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    {{ number_format($total_expenses, 0, ',', '.') }}
                   </div>
                 </div>
               </div>
@@ -105,7 +100,7 @@
                 Category
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
-                5
+                {{ $total_categories }}
               </div>
             </div>
             <div class="col-auto">
@@ -127,45 +122,40 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-hover table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>Date</th>
-                    <th>Category</th>
+                    <th>No</th>
+                    <th>Jenis</th>
                     <th>Amount</th>
                     <th>Description</th>
-                    <th>Created By</th>
+                    <th>Date</th>
+                    <th>Category</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach($incomesAndExpenses as $index => $incomeAndExpense)
                   <tr>
-                    <td>2020-01-01</td>
-                    <td>Income</td>
-                    <td>Rp 100.000</td>
-                    <td>Income from selling</td>
-                    <td>Admin</td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>
+                      @if($incomeAndExpense instanceof App\Incomes)
+                      <span class="badge badge-success">Pemasukan</span>
+                      @elseif($incomeAndExpense instanceof App\Expenses)
+                      <span class="badge badge-danger">Pengeluaran</span>
+                      @endif
+                    </td>
+                    <td>{{ number_format($incomeAndExpense->amount, 0, ',', '.') }}</td>
+                    <td>{{ $incomeAndExpense->description }}</td>
+                    <td>{{ $incomeAndExpense->date }}</td>
+                    <td>
+                      @foreach($categories as $category)
+                      @if($category->id_category == $incomeAndExpense->id_category)
+                      {{ $category->name_category }}
+                      @endif
+                      @endforeach
+                    </td>
                   </tr>
-                  <tr>
-                    <td>2020-01-01</td>
-                    <td>Expense</td>
-                    <td>Rp 50.000</td>
-                    <td>Expense for buying</td>
-                    <td>Admin</td>
-                  </tr>
-                  <tr>
-                    <td>2020-01-01</td>
-                    <td>Income</td>
-                    <td>Rp 100.000</td>
-                    <td>Income from selling</td>
-                    <td>Admin</td>
-                  </tr>
-                  <tr>
-                    <td>2020-01-01</td>
-                    <td>Expense</td>
-                    <td>Rp 50.000</td>
-                    <td>Expense for buying</td>
-                    <td>Admin</td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -177,4 +167,3 @@
 
 </div>
 @endsection
-

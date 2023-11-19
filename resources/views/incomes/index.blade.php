@@ -6,9 +6,9 @@
     <div class="table-responsive shadow-sm p-3">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
-        <a href="{{ route('categories.addPage') }}" class="btn btn-sm btn-primary mb-3">
+        <a href="{{ route('incomes.addPage') }}" class="btn btn-sm btn-primary mb-3">
           <i class="fas fa-plus"></i>
-          Tambah Kategori
+          Tambah Data Pemasukan
         </a>
 
         @if(session('success'))
@@ -22,48 +22,58 @@
 
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nama Kategori</th>
-            <th scope="col">Aksi</th>
+            <th scope="col">Tanggal</th>
+            <th scope="col">Jumlah</th>
+            <th scope="col">Kategori</th>
+            <th scope="col">Deskripsi</th>
+            <!-- <th scope="col">Aksi</th> -->
           </tr>
         </thead>
         <tbody>
-          @foreach($categories as $category)
+          @foreach($incomes as $income)
           <tr>
-            <td>{{ $category->id_category }}</td>
-            <td>{{ $category->name_category }}</td>
+            <td>{{ $income->date }}</td>
+            <td>{{ $income->amount }}</td>
             <td>
-              <a href="{{ route('categories.editPage', $category->id_category) }}" class="btn btn-sm btn-warning">
+              @foreach($categories as $category)
+              @if($category->id_category == $income->id_category)
+              {{ $category->name_category }}
+              @endif
+              @endforeach
+            </td>
+            <td>{{ $income->description }}</td>
+            <!-- <td>
+              <a href="{{ route('incomes.editPage', $income->id_income) }}" class="btn btn-sm btn-warning">
                 <i class="fas fa-edit"></i>
                 Edit
               </a>
-              <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteCategoryModal{{ $category->id_category }}">
+              <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteincomeModal{{ $income->id_income }}">
                 <i class="fas fa-trash"></i>
                 Delete
               </button>
-            </td>
+            </td> -->
           </tr>
           @endforeach
         </tbody>
       </table>
     </div>
 
-    @foreach($categories as $category)
-    <div class="modal fade" id="deleteCategoryModal{{ $category->id_category }}" tabindex="-1" aria-labelledby="deleteCategoryModal{{ $category->id_category }}" aria-hidden="true">
+    @foreach($incomes as $income)
+    <div class="modal fade" id="deleteincomeModal{{ $income->id_income }}" tabindex="-1" aria-labelledby="deleteincomeModal{{ $income->id_income }}" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteCategoryModal{{ $category->id_category }}">Hapus Data Kategori</h5>
+            <h5 class="modal-title" id="deleteincomeModal{{ $income->id_income }}">Hapus Data Kategori</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            Apakah Anda yakin ingin menghapus kategori {{ $category->name_category }}?
+            Apakah Anda yakin ingin menghapus kategori {{ $income->name_income }}?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <a href="{{ route('categories.delete', $category->id_category) }}" class="btn btn-danger">Hapus</a>
+            <a href="{{ route('incomes.delete', $income->id_income) }}" class="btn btn-danger">Hapus</a>
           </div>
         </div>
       </div>

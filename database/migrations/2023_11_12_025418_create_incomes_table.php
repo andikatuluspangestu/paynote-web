@@ -15,7 +15,7 @@ class CreateIncomesTable extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id('id_income');
-            $table->decimal('amount', 8, 2);
+            $table->integer('amount');
             $table->date('date');
             $table->timestamp('created_at')->useCurrent();
             $table->string('description', 255);
