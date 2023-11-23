@@ -3,64 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Incomes;
-use App\Balance;
-use App\Categories;
+use App\Models\Incomes;
+use App\Models\Balance;
+use App\Models\Categories;
 
 class IncomesController extends Controller
 {
     // Menampilkan Semua Data
     public function index()
     {
-        $incomes = Incomes::getAll();
-        $categories = Categories::getAll();
-        return view('incomes.index', compact('incomes', 'categories'));
+        $incomes = Incomes::getAll(); // Ambil semua data pemasukan
+        $categories = Categories::getAll(); // Ambil semua data kategori
+        return view('dashboard.incomes.list', compact('incomes', 'categories'));
     }
 
     // Goto Add Data Page
     public function addPage()
     {
         $title = "Tambah Data Pemasukan";
-
-        // Ambil semua data kategori
-        $categories = Categories::getAll();
-
-        return view('incomes.create', compact('title', 'categories'));
+        $categories = Categories::getAll(); // Ambil semua data kategori
+        return view('dashboard.incomes.add', compact('title', 'categories'));
     }
 
+    // Insert Data
     public function insert(Request $request)
     {
-
-        // Use the insert method from the Incomes model
+        
+        // Masukkan catatan pendapatan baru ke dalam database.
         $income = Incomes::insert([
-            'amount' => $request->amount,
-            'description' => $request->description,
-            'date' => $request->date,
-            'id_category' => $request->id_category,
-            'created_at' => now(),
+            'amount'        => $request->amount,
+            'description'   => $request->description,
+            'date'          => $request->date,
+            'id_category'   => $request->id_category,
+            'created_at'    => now(),
         ]);
 
-        // Check if the insert operation was successful
+        // Notifikasi
         if ($income) {
             return redirect()->route('incomes')->with('success', 'Data Berhasil Ditambahkan');
+        } else {
+            return redirect()->route('incomes')->with('error', 'Data Gagal Ditambahkan');
         }
-
-        // Handle error if the insert operation failed
-        return redirect()->route('incomes')->with('error', 'Gagal menambahkan data. Silakan coba lagi.');
     }
 
     // Delete Data
     public function delete($id)
     {
-        // Use the delete method from the Incomes model
+        // Hapus data pendapatan berdasarkan id
         $income = Incomes::deleteData($id);
 
-        // Check if the delete operation was successful
+        // Notifikasi
         if ($income) {
             return redirect()->route('incomes')->with('success', 'Data Berhasil Dihapus');
+        } else {
+            return redirect()->route('incomes')->with('error', 'Data Gagal Dihapus');
         }
-
-        // Handle error if the delete operation failed
-        return redirect()->route('incomes')->with('error', 'Gagal menghapus data. Silakan coba lagi.');
     }
 }

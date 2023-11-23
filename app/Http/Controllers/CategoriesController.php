@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Categories;
+use App\Models\Categories;
 
 class CategoriesController extends Controller
 {
@@ -11,60 +11,50 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Categories::getAll();
-        return view('categories.index', compact('categories'));
+        return view('dashboard.categories.list', compact('categories'));
     }
 
     // Goto Add Data Page
     public function addPage()
     {
-        $title = "Tambah Data Kategori";
-        return view('categories.create', compact('title'));
+        $title = "Tambah Kategori";
+        return view('dashboard.categories.add', compact('title'));
     }
 
     // Insert & Send Data to Model
     public function insert(Request $request)
     {
-        $request->validate([
-            'name_category' => 'required|unique:categories|max:255',
-        ]);
+        $data = [
+            'name_category' => $request->name_category
+        ];
 
-        Categories::insert(['name_category' => $request->name_category ]);
-
-        return redirect()->route('categories')->with('success', 'Data Berhasil Ditambahkan');
+        Categories::insert($data);
+        return redirect()->route('categories')->with('success', 'Data berhasil ditambahkan!');
     }
 
-    // Goto Edit Data Page
-    public function editPage($id_category)
+    // Go to Edit Data Page
+    public function editPage($id)
     {
-        // Ambil data kategori berdasarkan id_category via model
-        $category = Categories::getById($id_category);
-
-        if (!$category) {
-            return redirect()->route('categories')->with('error', 'Data Kategori Tidak Ditemukan');
-        }
-
-        $title = "Edit Data Kategori";
-        return view('categories.edit', compact('title', 'category'));
+        $title = "Edit Kategori";
+        $category = Categories::getById($id);
+        return view('dashboard.categories.edit', compact('title', 'category'));
     }
 
     // Update Data via Model
     public function update(Request $request, $id_category)
     {
-        $request->validate([
-            'name_category' => 'required|unique:categories|max:255',
-        ]);
+        $data = [
+            'name_category' => $request->name_category
+        ];
 
-        Categories::updateData($id_category, [
-            'name_category' => $request->name_category,
-        ]);
-
-        return redirect()->route('categories')->with('success', 'Data Berhasil Diubah');
+        Categories::updateData($id_category, $data);
+        return redirect()->route('categories')->with('success', 'Data berhasil diubah!');
     }
 
     // Delete Data
     public function delete($id)
     {
         Categories::deleteData($id);
-        return redirect()->route('categories')->with('success', 'Data Berhasil Dihapus');
+        return redirect()->route('categories')->with('success', 'Data berhasil dihapus!');
     }
 }
