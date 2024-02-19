@@ -125,8 +125,8 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Jenis</th>
+                    <!-- <th>No</th>
+                    <th>Jenis</th> -->
                     <th>Amount</th>
                     <th>Description</th>
                     <th>Date</th>
@@ -136,14 +136,14 @@
                 <tbody>
                   @foreach($incomesAndExpenses as $index => $incomeAndExpense)
                   <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <!-- <td>{{ $index + 1 }}</td>
                     <td>
                       @if($incomeAndExpense instanceof App\Incomes)
                       <span class="badge badge-success">Pemasukan</span>
                       @elseif($incomeAndExpense instanceof App\Expenses)
                       <span class="badge badge-danger">Pengeluaran</span>
                       @endif
-                    </td>
+                    </td> -->
                     <td>{{ number_format($incomeAndExpense->amount, 0, ',', '.') }}</td>
                     <td>{{ $incomeAndExpense->description }}</td>
                     <td>{{ $incomeAndExpense->date }}</td>
