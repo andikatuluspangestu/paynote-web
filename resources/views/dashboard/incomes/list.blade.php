@@ -39,13 +39,13 @@
           @foreach($incomes as $income)
           <tr>
             <td>{{ $income->date }}</td>
-            <td>{{ $income->amount }}</td>
+            <td>Rp {{ number_format($income->amount, 0, ',', '.') }}</td>
             <td>
-              @foreach($categories as $category)
-              @if($category->id_category == $income->id_category)
-              {{ $category->name_category }}
-              @endif
-              @endforeach
+                @foreach($categories as $category)
+                    @if($category->id_category == $income->id_category)
+                        <span class="badge badge-pill badge-primary">{{ $category->name_category }}</span>
+                    @endif
+                @endforeach
             </td>
             <td>{{ $income->description }}</td>
           </tr>
