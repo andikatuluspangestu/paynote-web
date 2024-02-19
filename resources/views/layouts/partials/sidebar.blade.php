@@ -1,7 +1,7 @@
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand my-3 d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand my-3 d-flex align-items-center justify-content-center" href="/">
 
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-money-bill-wave"></i>
@@ -16,7 +16,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
         </li>
